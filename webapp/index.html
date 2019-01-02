@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>
+            Smart Wallet system
+        </title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+        <link rel = 'stylesheet' href="app.css">
+    </head>
+    <body>
+        <h1 id='head'> Smart Wallet System Portal </h1>
+
+      <h2 id ='head1' margin-top ="30px"> Last known status</h2>
+
+       
+        
+ <table id= 'tab' class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Status</th>
+      <th scope="col" id='status'>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+     <tr>
+      <th scope="row">Time</th>
+      <td id='time_S'>time</td>
+    </tr>
+    
+
+  
+  </tbody>
+</table>
+        
+        
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script>
+  // Initialize Firebase
+        var config = {
+    apiKey: "AIzaSyAE03Nd0iRBC5k0b9TWAuuyK3jjCAXc0bk",
+    authDomain: "smart-wallet-8bc10.firebaseapp.com",
+    databaseURL: "https://smart-wallet-8bc10.firebaseio.com",
+    projectId: "smart-wallet-8bc10",
+    storageBucket: "smart-wallet-8bc10.appspot.com",
+    messagingSenderId: "452951041551"
+  };
+  firebase.initializeApp(config);
+        </script>
+        <script type="text/javascript" src="index.js"></script>
+    </body>
+</html>
