@@ -12,9 +12,12 @@ def post_onto_fb(status):
 	fb= firebase.FirebaseApplication(fb_link)
 	if status is True:
 		data = {time: "Wallet is present"}
+		last_update_data = {'status':"Wallet is connected", 'time':time}
 	else:
 		data= {time:" Wallet is not connected"}
+		last_update_data = {'status':"Wallet is Not connected", 'time':time}
 	
 	fb.patch(fb_link+'wallet_log/'+date, data)
 	
-post_onto_fb(True)
+	fb.patch(fb_link+'last_update/', last_update_data)
+	

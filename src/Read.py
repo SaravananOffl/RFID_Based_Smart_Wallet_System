@@ -1,6 +1,8 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
+from firebase_connect import post_onto_fb
+import time
 
 continue_reading = True
 
@@ -34,6 +36,11 @@ while continue_reading:
     if status == MIFAREReader.MI_OK:
         print "Card detected"
     
+    else:
+		print "Card Not detected"
+		post_onto_fb(False)
+		time.sleep(5)
+		print("done")
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
 
@@ -41,22 +48,10 @@ while continue_reading:
     if status == MIFAREReader.MI_OK:
 
         # Print UID
-        #print "Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
-    
-        # This is the default key for authentication
-        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
-    
-
-        # Select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
-
-        # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
-        # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-            MIFAREReader.MFRC522_Read(8)
-            MIFAREReader.MFRC522_StopCrypto1()
-            print("Authenticated")
-        else:
-            print "Authentication error"
-
+		print "Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
+		print "Card read UID: %s,%s,%s,%s" % (card_uid[0], card_uid[1], card_uid[2], card_uid[3])
+		if(uid[0]==card_uid[0] and uid[1]==card_uid[1] and uid[2]==card_uid[2] and uid[3] == card_uid[3]):
+			post_onto_fb(True)
+		else:
+			post_onto_fb("Some Other card has been placed!")
+		
