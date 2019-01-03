@@ -4,11 +4,41 @@
             Smart Wallet system
         </title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-        <link rel = 'stylesheet' href="app.css">
+        <link rel="stylesheet" href="bootstrap.css">
+         <link rel = 'stylesheet' href="app.css">
     </head>
     <body>
-        <h1 id='head'> Smart Wallet System Portal </h1>
+<!--        <h1 id='head'> Smart Wallet System Portal </h1>-->
+
+<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Smart Wallet System Portal</h1>
+  </div>
+</div>            
 
       <h2 id ='head1' margin-top ="30px"> Last known status</h2>
 
@@ -24,15 +54,27 @@
   <tbody>
     
      <tr>
-      <th scope="row">Time</th>
-      <td id='time_S'>time</td>
-    </tr>
-    
-
-  
+      <th scope="row" class='bl' >Time</th>
+      <td id='time_S' class="bl">time</td>
+    </tr>     
   </tbody>
 </table>
-        
+
+           <!--HTML-->
+<div class="clusterize">
+      <h2 id ='head1' margin-top ="30px"> Wallet Log Summary</h2>
+  
+  <div id="scrollArea" class="clusterize-scroll">
+    <table id = "logg"  class="table table-hover">
+      <tbody id="contentArea" class="clusterize-content">
+        <tr>
+          <td>Loading data…</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<ol id = "log"></ol>    
         
     <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
     <script>
@@ -47,6 +89,7 @@
   };
   firebase.initializeApp(config);
         </script>
+        <script type ="text/javascript" src="clusterise.js"></script>
         <script type="text/javascript" src="index.js"></script>
     </body>
 </html>
