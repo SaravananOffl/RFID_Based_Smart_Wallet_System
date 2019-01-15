@@ -1,10 +1,14 @@
 package com.example.smartwallet;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -62,12 +66,12 @@ public class MainActivity extends AppCompatActivity
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        final DatabaseReference myRef = database.getReference("last_update");
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         DatabaseReference status_ref = db.child("last_update/status");
         final TextView status = (TextView)findViewById(R.id.status);
         final TextView time = (TextView)findViewById(R.id.time);
         final boolean[] present = {false};
+
         //         Read from the database
         status_ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,10 +84,12 @@ public class MainActivity extends AppCompatActivity
                 status.setText(value);
                 if(new String("Wallet is Not connected").equals(value) ){
                     status.setTextColor(Color.parseColor("#ef5350"));
+                    noti(false);
+
                 }
                 else {
-                    present[0] = true;
                     status.setTextColor(Color.parseColor("#00e676"));
+                    noti(true);
                 }
             }
 
@@ -102,15 +108,12 @@ public class MainActivity extends AppCompatActivity
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
                 Log.e("VAlue", value);
-                if(present[0]) {
-                    time.setText(value);
+                time.setText(value);
+                if(!new String("Wallet is Not connected").equals(value)) {
                     time.setTextColor(Color.parseColor("#00e676"));
-
                 }
                 else{
-                    time.setText(value);
                     time.setTextColor(Color.parseColor("#ef5350"));
-
                 }
             }
 
@@ -122,7 +125,29 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+    public  void noti(Boolean there){
+        NotificationCompat.Builder notification;
+        final int uniqueId = 1603;
+        notification = new NotificationCompat.Builder(getApplicationContext());
+        notification.setAutoCancel(true);
+        notification.setSmallIcon(R.drawable.ic_launcher_background);
+        notification.setTicker("Your wallet is not connected");
+        notification.setWhen(System.currentTimeMillis());
+        notification.setContentTitle("Status");
+        if(there) {
+            notification.setContentText("Wallet is connected");
+        }
+        else {
+            notification.setContentText("Wallet is not connected");
+        }
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notification.setContentIntent(pendingIntent);
 
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        nm.notify(uniqueId,notification.build());
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
